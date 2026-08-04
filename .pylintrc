@@ -1,0 +1,76 @@
+[MAIN]
+# A comma-separated list of package or module names from where C extensions may
+# be loaded.
+extension-pkg-whitelist=
+
+# Files or directories to ignore during analysis (e.g., virtual environments or builds)
+ignore=venv,.venv,build,dist,node_modules
+
+# Use multiple processes to speed up Pylint analysis (0 auto-detects CPU cores)
+jobs=0
+
+[MESSAGES CONTROL]
+# Enable the message, report, category or checker with the given id(s).
+enable=c-extension-no-member
+
+# Disable the message, report, category or checker with the given id(s).
+# Common warnings to disable are grouped here. Un-comment or add codes as needed.
+disable=
+    # R0903: Too few public methods (triggered on simple data classes/objects)
+    too-few-public-methods,
+    # C0114: Missing module docstring
+    missing-module-docstring,
+    # C0115: Missing class docstring
+    missing-class-docstring,
+    # C0116: Missing function or method docstring
+    missing-function-docstring,
+    # W0511: TODO warnings
+    fixme,
+    # C0303: Trailing whitespace (trailing-whitespace)
+    Trailing-whitespace
+
+[REPORTS]
+# Set the output format (text, parseable, colorized, json)
+output-format=colorized
+
+# Tells whether to display a full report or only the messages
+reports=no
+
+# Activate the evaluation score
+score=yes
+
+[BASIC]
+# Good variable names allowed to be shorter than the 3-character default limit
+good-names=i,j,k,ex,Run,_,id,db,df
+
+# Naming style matching for functions, variables, classes, and constants
+function-naming-style=snake_case
+variable-naming-style=snake_case
+class-naming-style=PascalCase
+const-naming-style=UPPER_CASE
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100
+
+# Maximum number of lines in a module.
+max-module-lines=1000
+
+# String used as indentation unit. (4 spaces is standard Python PEP 8)
+indent-string='    '
+
+[DESIGN]
+# Maximum number of arguments for function / method.
+max-args=5
+
+# Maximum number of locals for function / method body.
+max-locals=15
+
+# Maximum number of public methods for a class.
+max-public-methods=20
+
+# Maximum number of return / yield statements for function / method body.
+max-returns=6
+
+# Maximum number of statements in function / method body.
+max-statements=50
