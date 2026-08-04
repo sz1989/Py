@@ -40,6 +40,16 @@ These scripts are mostly learning projects focused on:
 - financial market data retrieval
 - simple web service APIs
 
+## Mermaid
+
+```mermaid
+graph TD;
+    A[Start] --> B{Decision};
+    B --> C{Yes};
+    B --> D{No};
+    C --> E[End];
+    D --> E[End];
+```
 
 ## Ref
 
