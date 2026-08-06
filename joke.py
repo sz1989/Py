@@ -6,7 +6,11 @@ headers = {
     "User-Agent": "MyPythonLearningScript/1.0"
 }
 
-response = requests.get("https://icanhazdadjoke.com", headers=headers)
+response = requests.get(
+    "https://icanhazdadjoke.com",
+    headers=headers,
+    timeout=10  # <-- FIX: prevents indefinite hanging
+)
 
 if response.status_code == 200:
     try:
