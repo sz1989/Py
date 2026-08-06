@@ -1,10 +1,12 @@
 # pip install langchain langchain-google-genai yfinance
 import os
 import yfinance as yf
-from langchain_core.tools import tool
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import HumanMessage, ToolMessage
 from dotenv import load_dotenv
+
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, ToolMessage
+
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 # 1. Load your hidden API key from the .env file
 load_dotenv()

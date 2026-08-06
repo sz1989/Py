@@ -1,8 +1,8 @@
 import os
 import time
 from datetime import datetime
-import yfinance as yf
 from decimal import Decimal
+import yfinance as yf
 
 def predict_nav(yesterday_nav: Decimal, holdings: dict) -> None:
     """ Predicts the NAV of a mutual fund based on the live intraday price changes of its"""
@@ -47,7 +47,7 @@ def predict_nav(yesterday_nav: Decimal, holdings: dict) -> None:
             print("-" * 60)
             
             # Gross up the calculation to assume the remaining 32.28% moves inline
-            estimated_fund_pct_change = (weighted_changes_sum / (total_top_10_weight / 100))
+            estimated_fund_pct_change = weighted_changes_sum / (total_top_10_weight / 100)
 
             # Calculate the new predicted dollar NAV value
             predicted_nav = yesterday_nav * (1 + (Decimal(str(estimated_fund_pct_change)) / 100))
@@ -66,8 +66,8 @@ def predict_nav(yesterday_nav: Decimal, holdings: dict) -> None:
         # Pause execution for 60 seconds
         time.sleep(60)
 
-def load_holdings(nameOfFund: str) -> dict:
-    if nameOfFund.lower() == "fspcx":
+def load_holdings(name_of_fund: str) -> dict:
+    if name_of_fund.lower() == "fspcx":
         # Official top 10 holdings and percentages from Fidelity 
         return {
             "CB": float("13.68"),   # Chubb Ltd.
@@ -81,7 +81,7 @@ def load_holdings(nameOfFund: str) -> dict:
             "MET": float("4.64"),   # MetLife Inc.
             "AON": float("4.61")    # Aon PLC
         }
-    raise ValueError(f"Holdings for fund '{nameOfFund}' are not implemented.")
+    raise ValueError(f"Holdings for fund '{name_of_fund}' are not implemented.")
     
 
 if __name__ == "__main__":
