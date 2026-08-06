@@ -4,66 +4,62 @@ from datetime import datetime
 from decimal import Decimal
 import yfinance as yf
 
+def fetch_ticker_data(ticker_symbols: str):
+    return yf.Tickers(ticker_symbols)
+
+def calculate_weighted_change(ticker_obj, weight: float):
+    fast_info = ticker_obj.fast_info
+    current_price = fast_info["lastPrice"]
+    previous_close = fast_info["previousClose"]
+    pct_change = ((current_price - previous_close) / previous_close) * 100
+    return pct_change, (weight / 100) * pct_change
+
+def display_header():
+    os.system("cls" if os.name == "nt" else "clear")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"🔄 FSPCX LIVE PREDICTOR | Last Refreshed: {current_time}")
+    print("=" * 60)
+
 def predict_nav(yesterday_nav: Decimal, holdings: dict) -> None:
     """ Predicts the NAV of a mutual fund based on the live intraday price changes of its"""
-    total_top_10_weight = sum(holdings.values()) # 67.72%
+    total_weight = sum(holdings.values())
     ticker_symbols = " ".join(holdings.keys())
-    
+
     while True:
-        # Clear the terminal screen for a clean, dashboard-like display
-        os.system('cls' if os.name == 'nt' else 'clear')
-        
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"🔄 FSPCX LIVE PREDICTOR | Last Refreshed: {current_time}")
-        print("=" * 60)
-        
-        weighted_changes_sum = 0.0
-        
+        display_header()
+        weighted_sum = 0.0
+
         try:
-            # Download data for all tickers at once to minimize network calls
-            tickers_data = yf.Tickers(ticker_symbols)
-            
+            tickers_data = fetch_ticker_data(ticker_symbols)
+
             for ticker, weight in holdings.items():
                 try:
                     ticker_obj = tickers_data.tickers[ticker]
-                    fast_info = ticker_obj.fast_info
-                    
-                    # Extract live intraday price and previous day's close
-                    current_price = fast_info['lastPrice']
-                    previous_close = fast_info['previousClose']
-                    
-                    # Calculate today's percentage change for this specific stock
-                    pct_change = ((current_price - previous_close) / previous_close) * 100
-                    
-                    # Apply portfolio asset weight
-                    weighted_impact = (weight / 100) * pct_change
-                    weighted_changes_sum += weighted_impact
-                    
-                    print(f"{ticker:<5} | Weight: {weight:>5}% | Change: {pct_change:>+6.2f}% | Impact: {weighted_impact:>+6.2f}%")
-                    
+                    pct_change, weighted_impact = calculate_weighted_change(ticker_obj, weight)
+                    weighted_sum += weighted_impact
+
+                    print(f"{ticker:<5} | Weight: {weight:>5}% | "
+                          f"Change: {pct_change:>+6.2f}% | Impact: {weighted_impact:>+6.2f}%")
+
                 except Exception as e:
                     print(f"⚠️ Error parsing data for {ticker}: {e}")
-                    
-            print("-" * 60)
-            
-            # Gross up the calculation to assume the remaining 32.28% moves inline
-            estimated_fund_pct_change = weighted_changes_sum / (total_top_10_weight / 100)
 
-            # Calculate the new predicted dollar NAV value
-            predicted_nav = yesterday_nav * (1 + (Decimal(str(estimated_fund_pct_change)) / 100))
-            
-            print(f"Top 10 Aggregate Weight:  {total_top_10_weight:.2f}%")
-            print(f"Estimated Fund % Change:  {estimated_fund_pct_change:>+6.2f}%")
+            print("-" * 60)
+
+            estimated_change = weighted_sum / (total_weight / 100)
+            predicted = yesterday_nav * (1 + Decimal(str(estimated_change)) / 100)
+
+            print(f"Top 10 Aggregate Weight:  {total_weight:.2f}%")
+            print(f"Estimated Fund % Change:  {estimated_change:>+6.2f}%")
             print(f"Yesterday's Base NAV:     ${yesterday_nav:.2f}")
-            print(f"🚀 PREDICTED TODAY'S NAV: ${predicted_nav:.2f}")
+            print(f"🚀 PREDICTED TODAY'S NAV: ${predicted:.2f}")
             print("=" * 60)
             print("Ctrl+C to stop the live tracking.")
-            
+
         except Exception as network_error:
             print(f"⚠️ Network error while fetching data: {network_error}")
-            print("Retrying in the next loop cycle...")
+            print("Retrying...")
 
-        # Pause execution for 60 seconds
         time.sleep(60)
 
 def load_holdings(name_of_fund: str) -> dict:
