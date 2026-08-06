@@ -23,7 +23,7 @@ def escalate_to_human(reason: str) -> str:
 client = genai.Client()
 
 # 4. Agent instructions (System Guidelines)
-agent_instructions = """
+AGENT_INSTRUCTIONS = """
 You are an advanced customer support agent for an online retailer. 
 Be polite, professional, and helpful. 
 Use your tools to solve problems. If a customer is furious, aggressive, or demands 
@@ -43,7 +43,7 @@ response = client.models.generate_content(
     model='gemini-3.6-flash',  # Updated version
     contents=user_issue,
     config=types.GenerateContentConfig(
-        system_instruction=agent_instructions,
+        system_instruction=AGENT_INSTRUCTIONS,
         tools=agent_tools
         # Note: Temperature is omitted here as it is deprecated in Gemini 3.6+
     )

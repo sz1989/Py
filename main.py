@@ -1,7 +1,7 @@
 # pip install fastapi uvicorn
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
-from agentForStockPrice import ask
+from agent_for_stock_price import ask
 
 app = FastAPI(
     title="Gemini Stock Agent API",

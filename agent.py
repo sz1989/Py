@@ -23,21 +23,21 @@ def list_my_files() -> str:
 client = genai.Client()
 
 # 4. Define the Agent's identity, system instructions, and available tools
-agent_instructions = "You are a helpful Mac desktop assistant. Use your tools to answer the user's request accurately."
+AGENT_INSTRUCTIONS = "You are a helpful Mac desktop assistant. Use your tools to answer the user's request accurately."
 agent_tools = [list_my_files]
 
 # 5. Give the Agent an instruction that requires using a tool
-user_prompt = "Hey! Can you check my current project directory and let me know if there are any hidden configuration files inside?"
+USER_PROMPT = "Hey! Can you check my current project directory and let me know if there are any hidden configuration files inside?"
 
-print(f"User Request: '{user_prompt}'\n")
+print(f"User Request: '{USER_PROMPT}'\n")
 print("Agent is thinking and selecting tools...")
 
 # 6. Run the agent using the automatic function-calling model configuration
 response = client.models.generate_content(
     model='gemini-3.6-flash', # This specific workflow uses the core developer engine
-    contents=user_prompt,
+    contents=USER_PROMPT,
     config=types.GenerateContentConfig(
-        system_instruction=agent_instructions,
+        system_instruction=AGENT_INSTRUCTIONS,
         tools=agent_tools,
         temperature=0.1 # Low temperature keeps the agent focused and logical
     )
