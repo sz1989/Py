@@ -13,7 +13,7 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-3.6-flash')
 
 # 3. Create the text you want the AI to look at
-long_article = """
+LONG_ARTICLE = """
 Virtual environments are essential tools in modern Python development. 
 They create isolated spaces on your computer for individual projects. 
 This means each project can have its own specific libraries and versions 
@@ -23,11 +23,11 @@ the absolute newest version simultaneously without causing crashes.
 """
 
 # 4. Ask the AI a question combined with your text data
-prompt = f"Summarize the following text into exactly 2 simple bullet points:\n{long_article}"
+PROMPT = f"Summarize the following text into exactly 2 simple bullet points:\n{LONG_ARTICLE}"
 
 print("Sending request to Gemini AI... Please wait...")
 
 # 5. Send the request and print out the result
-response = model.generate_content(prompt)
+response = model.generate_content(PROMPT)
 print("\n--- AI Summary Result ---")
 print(response.text)

@@ -27,7 +27,11 @@ disable=
     # W0511: TODO warnings
     fixme,
     # C0303: Trailing whitespace (trailing-whitespace)
-    Trailing-whitespace
+    trailing-whitespace,
+    # C0301: Line too long (line-too-long)
+    line-too-long,
+    # W0718: Exception to catch (broad-except)
+    broad-except,
 
 [REPORTS]
 # Set the output format (text, parseable, colorized, json)

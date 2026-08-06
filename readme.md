@@ -56,6 +56,8 @@ graph TD;
 ```bash
 python3 -m venv .venv
 
+. .venv/bin/activate
+
 pip freeze > requirements.txt
 
 pip install -r requirements.txt
