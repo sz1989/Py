@@ -1,3 +1,4 @@
+# %%
 import requests
 
 # We must add a 'User-Agent' header so the website knows we are a Python script
@@ -23,3 +24,5 @@ if response.status_code == 200:
         print(f"Raw response text was: {response.text}")
 else:
     print(f"Could not connect. Status code: {response.status_code}")
+
+# %%
