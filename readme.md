@@ -2,6 +2,21 @@
 
 This folder contains a small set of Python scripts for experimenting with AI agents, web APIs, and financial data.
 
+## Tech Stack
+
+| Category | Technologies |
+|----------|---------------|
+| **Language** | Python 3.12 |
+| **AI/LLM** | Google Generative AI, OpenAI, LangChain, LangGraph |
+| **Web Framework** | FastAPI, Uvicorn, Starlette |
+| **Data Processing** | Pandas, NumPy, yfinance |
+| **HTTP & APIs** | requests, httpx, Google API Python Client |
+| **Data Validation** | Pydantic |
+| **Database/ORM** | Peewee |
+| **Environment Management** | python-dotenv |
+| **Development Tools** | Jupyter, JupyterLab, IPython, Jupyter Notebook |
+| **Async Runtime** | asyncio, grpcio |
+
 ## Files Overview
 
 - agent.py
