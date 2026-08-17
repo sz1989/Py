@@ -2,6 +2,15 @@
 
 This folder contains a small set of Python scripts for experimenting with AI agents, web APIs, and financial data.
 
+## Setup
+
+Dependencies are managed with [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync          # creates .venv and installs runtime + dev dependencies
+uv run python ai.py   # run any script inside the project's venv
+```
+
 ## Tech Stack
 
 | Category | Technologies |
@@ -13,7 +22,7 @@ This folder contains a small set of Python scripts for experimenting with AI age
 | **HTTP & APIs** | requests, httpx, Google API Python Client |
 | **Data Validation** | Pydantic |
 | **Database/ORM** | Peewee |
-| **Environment Management** | python-dotenv |
+| **Environment Management** | python-dotenv, uv |
 | **Development Tools** | Jupyter, JupyterLab, IPython, Jupyter Notebook |
 | **Async Runtime** | asyncio, grpcio |
 

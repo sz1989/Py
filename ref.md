@@ -12,11 +12,21 @@ graph TD;
 ## Ref
 
 ```bash
-python3 -m venv .venv
+# create .venv + install all deps from pyproject.toml / uv.lock
+uv sync
 
-. .venv/bin/activate
+# add a new runtime dependency (writes to pyproject.toml + uv.lock)
+uv add <package>
 
-pip freeze > requirements.txt
+# add a dev-only dependency (linting, notebooks, etc.)
+uv add --dev <package>
 
-pip install -r requirements.txt
+# run a script inside the project's venv without manually activating it
+uv run python ai.py
+
+# run pylint via uv
+uv run pylint $(git ls-files '*.py')
+
+# refresh the lockfile after editing pyproject.toml by hand
+uv lock
 ```
