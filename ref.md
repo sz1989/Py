@@ -1,14 +1,3 @@
-## Mermaid
-
-```mermaid
-graph TD;
-    A[Start] --> B{Decision};
-    B --> C{Yes};
-    B --> D{No};
-    C --> E[End];
-    D --> E[End];
-```
-
 ## Ref
 
 ```bash
@@ -29,4 +18,15 @@ uv run pylint $(git ls-files '*.py')
 
 # refresh the lockfile after editing pyproject.toml by hand
 uv lock
+```
+
+## Mermaid
+
+```mermaid
+graph TD;
+    A[Start] --> B{Decision};
+    B --> C{Yes};
+    B --> D{No};
+    C --> E[End];
+    D --> E[End];
 ```
