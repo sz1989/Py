@@ -2,18 +2,28 @@
 
 This folder contains a small set of Python scripts for experimenting with AI agents, web APIs, and financial data.
 
+## Setup
+
+Dependencies are managed with [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync          # creates .venv and installs runtime + dev dependencies
+uv run python ai.py   # run any script inside the project's venv
+```
+
 ## Tech Stack
 
 | Category | Technologies |
 |----------|---------------|
 | **Language** | Python 3.12 |
 | **AI/LLM** | Google Generative AI, OpenAI, LangChain, LangGraph |
+| **Retrieval-Augmented Generation (RAG)** | FAISS, Google Generative AI embeddings |
 | **Web Framework** | FastAPI, Uvicorn, Starlette |
 | **Data Processing** | Pandas, NumPy, yfinance |
 | **HTTP & APIs** | requests, httpx, Google API Python Client |
 | **Data Validation** | Pydantic |
 | **Database/ORM** | Peewee |
-| **Environment Management** | python-dotenv |
+| **Environment Management** | python-dotenv, uv |
 | **Development Tools** | Jupyter, JupyterLab, IPython, Jupyter Notebook |
 | **Async Runtime** | asyncio, grpcio |
 
@@ -34,6 +44,10 @@ This folder contains a small set of Python scripts for experimenting with AI age
 - ai.py
   - A basic example that sends text to Gemini for summarization.
   - Technologies: Google Generative AI SDK, python-dotenv
+
+- ai_rag.py
+  - A retrieval-augmented generation example that embeds a small knowledge base, retrieves relevant chunks with FAISS, and asks Gemini to answer using that context.
+  - Technologies: Google Generative AI SDK, FAISS, NumPy, python-dotenv
 
 - joke.py
   - Fetches a random dad joke from an online API.

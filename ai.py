@@ -1,3 +1,4 @@
+# %%
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -31,3 +32,5 @@ print("Sending request to Gemini AI... Please wait...")
 response = model.generate_content(PROMPT)
 print("\n--- AI Summary Result ---")
 print(response.text)
+
+# %%
