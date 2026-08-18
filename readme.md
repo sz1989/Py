@@ -17,6 +17,7 @@ uv run python ai.py   # run any script inside the project's venv
 |----------|---------------|
 | **Language** | Python 3.12 |
 | **AI/LLM** | Google Generative AI, OpenAI, LangChain, LangGraph |
+| **Retrieval-Augmented Generation (RAG)** | FAISS, Google Generative AI embeddings |
 | **Web Framework** | FastAPI, Uvicorn, Starlette |
 | **Data Processing** | Pandas, NumPy, yfinance |
 | **HTTP & APIs** | requests, httpx, Google API Python Client |
@@ -43,6 +44,10 @@ uv run python ai.py   # run any script inside the project's venv
 - ai.py
   - A basic example that sends text to Gemini for summarization.
   - Technologies: Google Generative AI SDK, python-dotenv
+
+- ai_rag.py
+  - A retrieval-augmented generation example that embeds a small knowledge base, retrieves relevant chunks with FAISS, and asks Gemini to answer using that context.
+  - Technologies: Google Generative AI SDK, FAISS, NumPy, python-dotenv
 
 - joke.py
   - Fetches a random dad joke from an online API.

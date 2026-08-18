@@ -41,10 +41,10 @@ index.add(embedding_matrix)
 
 print(f"Successfully indexed {index.ntotal} chunks into local FAISS database.")
 
-def retrieve_relevant_chunks(user_query, top_k=2):
+def retrieve_relevant_chunks(query_text, top_k=2):
     query_embedding_res = client.models.embed_content(
         model=EMBEDDING_MODEL_NAME,
-        contents=user_query,
+        contents=query_text,
         config=types.EmbedContentConfig(output_dimensionality=768)
     )
     query_vector = np.array([query_embedding_res.embeddings[0].values]).astype("float32")
@@ -60,33 +60,37 @@ def retrieve_relevant_chunks(user_query, top_k=2):
             
     return retrieved_context
 
-def ExecuteRAGQuery(rag_prompt):
-    MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3.6-flash")
+def execute_rag_query(prompt):
+    model_name = os.getenv("MODEL_NAME", "gemini-3.6-flash")
     print("\n--- Generating Final Answer via Gemini ---")
     generation_response = client.models.generate_content(
-        model=MODEL_NAME,
-        contents=rag_prompt
+        model=model_name,
+        contents=prompt,
     )
     return generation_response
 
-# Execute RAG Query
-user_query = "Who is leading Project Apollo and what is the budget?"
-print(f"\nUser Query: '{user_query}'")
+def main():
+    """Run a sample retrieval-augmented generation query."""
+    user_query = "Who is leading Project Apollo and what is the budget?"
+    print(f"\nUser Query: '{user_query}'")
 
-matched_contexts = retrieve_relevant_chunks(user_query, top_k=2)
-context_str = "\n".join(matched_contexts)
+    matched_contexts = retrieve_relevant_chunks(user_query, top_k=2)
+    context_str = "\n".join(matched_contexts)
 
-# Construct prompt
-rag_prompt = f"""
-You are a helpful assistant. Answer the user question accurately using only the provided context.
-If the answer is not in the context, say "I don't know".
+    rag_prompt = f"""
+    You are a helpful assistant. Answer the user question accurately using only the provided context.
+    If the answer is not in the context, say "I don't know".
 
-Context:
-{context_str}
+    Context:
+    {context_str}
 
-Question: {user_query}
-Answer:
-"""
+    Question: {user_query}
+    Answer:
+    """
 
-response = ExecuteRAGQuery(rag_prompt)
-print(response.text)
+    response = execute_rag_query(rag_prompt)
+    print(response.text)
+
+
+if __name__ == "__main__":
+    main()
