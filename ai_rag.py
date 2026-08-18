@@ -37,7 +37,7 @@ embedding_matrix = np.array(embeddings).astype("float32")
 # Setup Local FAISS Index (matching our 768 dimension)
 dimension = embedding_matrix.shape[1] 
 index = faiss.IndexFlatL2(dimension)
-index.add(embedding_matrix)
+index.add(embedding_matrix)  # pylint: disable=no-value-for-parameter
 
 print(f"Successfully indexed {index.ntotal} chunks into local FAISS database.")
 
@@ -50,7 +50,9 @@ def retrieve_relevant_chunks(query_text, top_k=2):
     query_vector = np.array([query_embedding_res.embeddings[0].values]).astype("float32")
     
     # Query FAISS index
-    distances, indices = index.search(query_vector, top_k)
+    distances, indices = index.search(  # pylint: disable=no-value-for-parameter
+        query_vector, top_k
+    )
     print(distances, indices)
 
     retrieved_context = []
@@ -70,7 +72,7 @@ def execute_rag_query(prompt):
     return generation_response
 
 def main():
-    """Run a sample retrieval-augmented generation query."""
+    """Run a retrieval-augmented generation query."""
     user_query = "Who is leading Project Apollo and what is the budget?"
     print(f"\nUser Query: '{user_query}'")
 
